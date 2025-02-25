@@ -5,7 +5,7 @@ import 'package:final_project/core/widgets/custom_link.dart';
 import 'package:final_project/core/widgets/custom_modal_bottom_sheet.dart';
 import 'package:final_project/feature/auth/logic/auth_cubit.dart';
 import 'package:final_project/feature/auth/presentation/register_screen.dart';
-import 'package:final_project/feature/home/presentation/home_screen.dart';
+import 'package:final_project/feature/main_screen/presentation/mainscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
             }
 
             if (state is AuthLoginSuccess) {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> MainScreen()));
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text("Success Login"),
               ));

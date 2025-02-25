@@ -4,35 +4,44 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomHomeIconContainer extends StatelessWidget {
   final IconData? containerIcon;
-  final String? avatar_image;
+  final String? avatarImage;
+  final VoidCallback ontapFunction;
 
-  const CustomHomeIconContainer({super.key, this.containerIcon, this.avatar_image});
+  const CustomHomeIconContainer({
+    super.key,
+    this.containerIcon,
+    this.avatarImage,
+    required this.ontapFunction
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 45.w,
-      height: 55.h,
-      decoration: ShapeDecoration(
-        color: Colors.white.withOpacity(0.2),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(34.r),
+    return GestureDetector(
+      onTap: ontapFunction,
+      child: Container(
+        width: 45.w,
+        height: 55.h,
+        decoration: ShapeDecoration(
+          color: Colors.white.withOpacity(0.2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(34.r),
+          ),
+          image: avatarImage != null
+              ? DecorationImage(
+                  image: NetworkImage(avatarImage!),
+                  fit: BoxFit.fill,
+                )
+              : null, // If no image, don't set DecorationImage
         ),
-        image: avatar_image != null
-            ? DecorationImage(
-                image: NetworkImage(avatar_image!),
-                fit: BoxFit.fill,
+        child: containerIcon != null
+            ? Center(
+                child: Icon(
+                  containerIcon,
+                  color: AppColor.whiteConstantColor,
+                ),
               )
-            : null, // If no image, don't set DecorationImage
+            : null, // If no icon, don't add child
       ),
-      child: containerIcon != null
-          ? Center(
-              child: Icon(
-                containerIcon,
-                color: AppColor.whiteConstantColor,
-              ),
-            )
-          : null, // If no icon, don't add child
     );
   }
 }

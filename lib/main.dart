@@ -22,7 +22,7 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-    scaffoldBackgroundColor: Colors.white, 
+    scaffoldBackgroundColor: Color(0xffFBFBFB), 
   ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen() ,

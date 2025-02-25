@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:final_project/core/constants/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +9,13 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
+  double? customwidth;
 
-  const CustomButton({
+  CustomButton({
     super.key,
     required this.label,
     required this.onPressed,
+    this.customwidth
   });
 
   @override
@@ -19,7 +23,7 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 335.w,
+        width: customwidth ?? 335.w,
         height: 60.h,
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         decoration: BoxDecoration(
