@@ -1,10 +1,12 @@
 
+import 'package:final_project/core/network/dio_helper.dart';
 import 'package:final_project/feature/intro/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 void main() {
+  DioHelper.init();
   runApp(ScreenUtilInit(
     designSize: const Size(375, 812),
     minTextAdapt: true,

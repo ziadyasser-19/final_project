@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, sized_box_for_whitespace
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:final_project/core/constants/app_color.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomContainerAuth extends StatelessWidget {
   final String container_text;
   final String assetImagePath;
-  const CustomContainerAuth({super.key , required this.assetImagePath , required this.container_text});
+  const CustomContainerAuth({super.key, required this.assetImagePath, required this.container_text});
 
   @override
   Widget build(BuildContext context) {
@@ -24,44 +24,27 @@ class CustomContainerAuth extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          Image.asset(
+            assetImagePath,
             width: 24.w,
             height: 24.h,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(assetImagePath))),
           ),
           SizedBox(width: 12.w),
           Expanded(
-            child: SizedBox(
-              child: Expanded(
-                child: SizedBox(
-                  child: Text(
-                     container_text,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.plusJakartaSans(
-                      color: AppColor.teaxtAppMainColor,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      height: 1.50.h,
-                    ),
-                  ),
-                ),
+            child: Text(
+              container_text,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.plusJakartaSans(
+                color: AppColor.teaxtAppMainColor,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 1.50,
               ),
             ),
           ),
-          SizedBox(width: 12.w),
-          Container(
-            width: 24.w,
-            height: 24.h,
-            
-            
-          ),
+          SizedBox(width: 36.w), // Adjust spacing for alignment
         ],
       ),
     );

@@ -16,8 +16,9 @@ import 'package:google_fonts/google_fonts.dart';
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
 
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +28,24 @@ class RegisterScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            if (state is AuthLoginLoading) {
+            if (state is AuthRegisterLoading) {
               showDialog(
-                  context: context,
-                  builder: (context) =>
-                      Center(child: CircularProgressIndicator()));
+                context: context,
+                builder: (context) =>
+                    const Center(child: CircularProgressIndicator()),
+              );
             }
 
-            if (state is AuthLoginSuccess) {
+            if (state is AuthRegisterSuccess) {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Success Login"),
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("Registration Successful"),
               ));
             }
 
-            if (state is AuthLoginFailure) {
-              Navigator.pop(context);
+            if (state is AuthRegisterFailure) {
+              // Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
               ));
@@ -50,118 +53,113 @@ class RegisterScreen extends StatelessWidget {
           },
           builder: (context, state) {
             return SafeArea(
-                child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 24.h),
-                    Text(
-                      "Create your new \naccount",
-                      style: GoogleFonts.plusJakartaSans(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 24.h),
+                      Text(
+                        "Create your new \naccount",
+                        style: GoogleFonts.plusJakartaSans(
                           fontSize: 32.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColor.teaxtAppMainColor,
-                          height: 1.5.h),
-                    ),
-                    SizedBox(height: 24.h),
-                    CustomTextInput(
-                      hintText: 'Email address',
-                      labelText: 'Email address',
-                      controller: userNameController,
-                    ),
-                    SizedBox(height: 24.h),
-                    CustomTextInput(
-                      hintText: 'Password',
-                      labelText: 'Password',
-                      controller: passwordController,
-                      isPassword: true,
-                      suffixicon: Icons.remove_red_eye_outlined,
-                    ),
-                    SizedBox(height: 24.h),
-                    CustomTextInput(
-                      hintText: 'Password',
-                      labelText: 'Confirm Password',
-                      controller: passwordController,
-                      isPassword: true,
-                      suffixicon: Icons.remove_red_eye_outlined,
-                    ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    CustomButton(
+                          height: 1.5.h,
+                        ),
+                      ),
+                      SizedBox(height: 24.h),
+                      CustomTextInput(
+                        hintText: 'Email Address',
+                        labelText: 'Email address',
+                        controller: emailController,
+                      ),
+                      SizedBox(height: 24.h),
+                      CustomTextInput(
+                        hintText: 'password',
+                        labelText: 'Password',
+                        controller: passwordController,
+                        isPassword: true,
+                        suffixicon: Icons.remove_red_eye_outlined,
+                      ),
+                      SizedBox(height: 24.h),
+                      CustomTextInput(
+                        hintText: 'Password',
+                        labelText: 'Confirm Password',
+                        controller: confirmPasswordController,
+                        isPassword: true,
+                        suffixicon: Icons.remove_red_eye_outlined,
+                      ),
+                      SizedBox(height: 24.h),
+                      CustomButton(
                         label: 'Register',
                         onPressed: () {
-                          context.read<AuthCubit>().login(
-                              userNameController.text, passwordController.text);
-                        }),
-                    SizedBox(height: 24.h),
-                    Row(
-                      children: [
-                        Expanded(
+                          context.read<AuthCubit>().register(
+                                "ziad",
+                                passwordController.text,
+                                emailController.text,
+                                "01120011456",
+                              );
+                        },
+                      ),
+                      SizedBox(height: 24.h),
+                      Row(
+                        children: [
+                          Flexible(
                             flex: 1,
                             child: Divider(
-                              height: 1.h,
+                              thickness: 1,
                               color: AppColor.outlinegreyBorderColor,
-                            )),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            'or continue with',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.plusJakartaSans(
-                              color: AppColor.secondarytextColor,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              height: 1.50,
                             ),
                           ),
-                        ),
-                        Expanded(
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: Text(
+                              'or continue with',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.plusJakartaSans(
+                                color: AppColor.secondarytextColor,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                height: 1.50,
+                              ),
+                            ),
+                          ),
+                          Flexible(
                             flex: 1,
                             child: Divider(
-                              height: 1.h,
+                              thickness: 1,
                               color: AppColor.outlinegreyBorderColor,
-                            )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    CustomContainerAuth(
-                      assetImagePath: "assets/imgs/google_icon.png",
-                      container_text: "Continue with google",
-                    ),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    CustomContainerAuth(
-                      assetImagePath: "assets/imgs/facebook_logo.png",
-                      container_text: "Continue with facebook",
-                    ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    CustomLink(
-                      firstMAinLinktext: "Do you have an account?",
-                      secondNameLinkText: "Login",
-                      onpressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
-                      },
-                    ),
-                    SizedBox(
-                      height: 60.h,
-                    )
-                  ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24.h),
+                      CustomContainerAuth(
+                        assetImagePath: "assets/imgs/google_icon.png",
+                        container_text: "Continue with Google",
+                      ),
+                      SizedBox(height: 16.h),
+                      CustomContainerAuth(
+                        assetImagePath: "assets/imgs/facebook_logo.png",
+                        container_text: "Continue with Facebook",
+                      ),
+                      SizedBox(height: 24.h),
+                      CustomLink(
+                        firstMAinLinktext: "Do you have an account?",
+                        secondNameLinkText: "Login",
+                        onpressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      SizedBox(height: 60.h),
+                    ],
+                  ),
                 ),
               ),
-            ));
+            );
           },
         ),
       ),

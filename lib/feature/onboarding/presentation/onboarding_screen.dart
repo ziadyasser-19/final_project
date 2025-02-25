@@ -56,9 +56,9 @@ class OnboardingScreen extends StatelessWidget {
                   child: Column(
                     key: ValueKey<int>(context.read<OnboardCubit>().index),
                     children: AnimationConfiguration.toStaggeredList(
-                      duration: const Duration(milliseconds: 700),
+                      duration: const Duration(milliseconds: 200),
                       childAnimationBuilder: (widget) => ScaleAnimation(
-                        scale: 0.5,
+                        scale: 0.3,
                         child: FadeInAnimation(child: widget),
                       ),
                       children: [

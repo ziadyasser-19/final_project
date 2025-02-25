@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColor {
   AppColor._();
 
@@ -13,6 +15,14 @@ class AppColor {
   static const borderheadlineTextColor = Color(0xff7C7D82);
   static const borderhintTextColor = Color(0xffBCBDC0);
   static const linksecondcolour = Color(0xFF1B5EC9);
+
+  // Home Page Colors
+  // main container
+  static const firstcontainergridcolor = Color(0xffFD9276);
+  static const secondcontainergridcolor = Color(0xffFD7A82);
+  static const thirdcontainergridcolor = Color(0xffFD728B);
+  static const fourthcontainergridcolor = Color(0xffFDB3B2);
+  static const fifthcontainergridcolor = Color(0xffFDCEB3);
 
   static const secondarytextColor = Color(0xFF7C7D81);
   static const whitegreyColor = Color(0xFFEEEFF1);

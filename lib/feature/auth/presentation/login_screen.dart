@@ -2,8 +2,10 @@
 import 'package:final_project/core/constants/app_color.dart';
 import 'package:final_project/core/widgets/custom_container_auth.dart';
 import 'package:final_project/core/widgets/custom_link.dart';
+import 'package:final_project/core/widgets/custom_modal_bottom_sheet.dart';
 import 'package:final_project/feature/auth/logic/auth_cubit.dart';
 import 'package:final_project/feature/auth/presentation/register_screen.dart';
+import 'package:final_project/feature/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,14 +35,14 @@ class LoginScreen extends StatelessWidget {
             }
 
             if (state is AuthLoginSuccess) {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text("Success Login"),
               ));
             }
 
             if (state is AuthLoginFailure) {
-              Navigator.pop(context);
+              // Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
               ));
@@ -62,8 +64,7 @@ class LoginScreen extends StatelessWidget {
                           fontSize: 32.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColor.teaxtAppMainColor,
-                          height: 1.5.h
-                          ),
+                          height: 1.5.h),
                     ),
                     SizedBox(height: 24.h),
                     CustomTextInput(
@@ -82,14 +83,24 @@ class LoginScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 24.0.h),
                       child: Center(
-                        child: Text(
-                          'Forget password?',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.plusJakartaSans(
-                            color: AppColor.teaxtAppMainColor,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            height: 1.50,
+                        child: GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (tcontext) {
+                                  return CustomModalBottomSheet();
+                                });
+                          },
+                          child: Text(
+                            'Forget password?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.plusJakartaSans(
+                              color: AppColor.teaxtAppMainColor,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                              height: 1.50,
+                            ),
                           ),
                         ),
                       ),
@@ -103,14 +114,15 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: 24.h),
                     Row(
                       children: [
-                        Expanded(
-                            flex: 1,
-                            child: Divider(
-                              height: 1.h,
-                              color: AppColor.outlinegreyBorderColor,
-                            )),
-                        Expanded(
-                          flex: 2,
+                        Flexible(
+                          flex: 1,
+                          child: Divider(
+                            thickness: 1,
+                            color: AppColor.outlinegreyBorderColor,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
                           child: Text(
                             'or continue with',
                             textAlign: TextAlign.center,
@@ -122,12 +134,13 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(
-                            flex: 1,
-                            child: Divider(
-                              height: 1.h,
-                              color: AppColor.outlinegreyBorderColor,
-                            )),
+                        Flexible(
+                          flex: 1,
+                          child: Divider(
+                            thickness: 1,
+                            color: AppColor.outlinegreyBorderColor,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(
