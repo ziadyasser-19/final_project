@@ -1,18 +1,34 @@
 import 'package:final_project/core/constants/app_color.dart';
+import 'package:final_project/feature/browse_screen/presentation/filter_page.dart';
+import 'package:final_project/feature/home/logic/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomBrowseFormfield extends StatelessWidget {
-  const CustomBrowseFormfield({super.key});
+  final double width;
+  final double height;
+  final String hintText;
+  final VoidCallback onpressedFn;
+  const CustomBrowseFormfield(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.hintText,
+      required this.onpressedFn});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 375.w,
-      height: 60.h,
+      width: width,
+      height: height,
       decoration: BoxDecoration(color: AppColor.whiteConstantColor),
       child: TextFormField(
+        onFieldSubmitted: (value) {
+          onpressedFn();
+        },
+        onChanged: (value) => context.read<HomeCubit>().searchProducts(value),
         textAlign: TextAlign.start,
         decoration: InputDecoration(
           prefixIcon: Icon(
@@ -20,7 +36,7 @@ class CustomBrowseFormfield extends StatelessWidget {
             color: AppColor.buttonColor,
             size: 23.sp,
           ),
-          hintText: 'Search laptop, headset..',
+          hintText: hintText,
           contentPadding: EdgeInsets.symmetric(vertical: 10.h),
           hintStyle: GoogleFonts.plusJakartaSans(
             color: AppColor.borderhintTextColor,

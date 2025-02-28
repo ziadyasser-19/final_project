@@ -11,14 +11,17 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
   UserModel? userData;
+  String userQuery = '';
   List<ProductModel> products = [];
+  List<ProductModel> browsedProducts = [];
+  List<ProductModel> filterproducts = [];
 
   void getUserData() async {
     emit(HomeUserLoading());
     DioHelper.getData(url: Endpoints.currentUserDataEndpoint).then((value) {
       if (value.statusCode == 200 && value.data != null) {
         userData = UserModel.fromJson(value.data);
-        print(userData!.name);
+        // print(userData!.name);
         emit(HomeUserLoaded());
       } else {
         emit(HomeUserError("Error"));
@@ -33,13 +36,14 @@ class HomeCubit extends Cubit<HomeState> {
       if (value.statusCode == 200 && value.data != null) {
         products =
             (value.data as List).map((e) => ProductModel.fromJson(e)).toList();
-        print(products.length);
+
+        // print(products.length);
         emit(HomeProductsLoaded());
       } else {
         emit(HomeProductsError("Error"));
       }
     }).catchError((error) {
-      print(error.toString());
+      // print(error.toString());
       emit(HomeProductsError(error.toString()));
     });
   }
@@ -51,9 +55,27 @@ class HomeCubit extends Cubit<HomeState> {
         Future(() => getUserData()),
         Future(() => getProducts()),
       ]);
-      emit(HomedataLoaded()); 
+      emit(HomedataLoaded());
     } catch (e) {
       emit(HomedataError());
     }
+  }
+
+  void searchProducts(String query) {
+    if (query.isEmpty) {
+    } else {
+      userQuery = query;
+      browsedProducts = products
+          .where((product) =>
+              product.title!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      filterproducts = products
+          .where((product) => product.title!
+              .split(' ')
+              .any((word) => word.toLowerCase().contains(query.toLowerCase())))
+          .toList();
+      print("filter prod : " + filterproducts.length.toString());
+    }
+    emit(HomeProductsLoaded());
   }
 }
