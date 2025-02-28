@@ -1,6 +1,7 @@
 import 'package:final_project/core/constants/app_color.dart';
 import 'package:final_project/core/widgets/custom_app_bar_container_icon.dart';
 import 'package:final_project/feature/home/data/model/user_model.dart';
+import 'package:final_project/feature/profile/presentation/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,7 +57,9 @@ class CustomProfileTopContainer extends StatelessWidget {
               ),
               CustomAppBarContainerIcon(
                 containerIcon: Icons.edit,
-                ontapFn: () {},
+                ontapFn: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfileScreen(user: user,)));
+                },
               ),
             ],
           ),
@@ -70,7 +73,7 @@ class CustomProfileTopContainer extends StatelessWidget {
               decoration: ShapeDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://w7.pngwing.com/pngs/4/736/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png"),
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmb1SDFID_IwgMnAHPP8slltZGF4GVaKqNqg&s"),
                   fit: BoxFit.fill,
                 ),
                 shape: OvalBorder(),

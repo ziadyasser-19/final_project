@@ -3,7 +3,9 @@ import 'package:final_project/core/widgets/custom_listnotifications.dart';
 import 'package:final_project/core/widgets/custom_notification_tiel.dart';
 import 'package:final_project/core/widgets/custom_profile_top_container.dart';
 import 'package:final_project/feature/home/logic/cubit/home_cubit.dart';
+import 'package:final_project/feature/notification/presentation/notification_screen.dart';
 import 'package:final_project/feature/payments/presentation/payment_methods.dart';
+import 'package:final_project/feature/privacy&policy/presentation/privacy_and_policy_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,102 +14,109 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
-  
-  final List<CustomNotificationTile> litofCustomTiles2 = [
-    CustomNotificationTile(
-      mainTitle: "Invite Friends",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.person_add_rounded,
-        size: 25.sp,
-        color: AppColor.buttonColor,
-      ),
-      subTitle: '',
-      onpressedfn: () {},
-    ),
-    CustomNotificationTile(
-      mainTitle: "Privacy Policy ",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.enhanced_encryption_outlined,
-        size: 25.sp,
-        color: AppColor.buttonColor,
-      ),
-      subTitle: '',
-      onpressedfn: () {},
-    ),
-    CustomNotificationTile(
-      mainTitle: "Help Center",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.emergency_outlined,
-        size: 25.sp,
-        color: AppColor.buttonColor,
-      ),
-      subTitle: '',
-      onpressedfn: () {},
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
     final List<CustomNotificationTile> litofCustomTiles = [
-    CustomNotificationTile(
-      mainTitle: "Address",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.location_on_outlined,
-        size: 25.sp,
-        color: AppColor.buttonColor,
+      CustomNotificationTile(
+        mainTitle: "Address",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.location_on_outlined,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {},
       ),
-      subTitle: '',
-      onpressedfn: () {},
-    ),
-    CustomNotificationTile(
-      mainTitle: "Payment Methods",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.credit_card_outlined,
-        size: 25.sp,
-        color: AppColor.buttonColor,
+      CustomNotificationTile(
+        mainTitle: "Payment Methods",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.credit_card_outlined,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => PaymentMethods()));
+        },
       ),
-      subTitle: '',
-      onpressedfn: () {
-        
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PaymentMethods()));
-      },
-    ),
-    CustomNotificationTile(
-      mainTitle: "Notifications",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.notifications_outlined,
-        size: 25.sp,
-        color: AppColor.buttonColor,
+      CustomNotificationTile(
+        mainTitle: "Notifications",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.notifications_outlined,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Notificationscreen()));
+        },
       ),
-      subTitle: '',
-      onpressedfn: () {},
-    ),
-    CustomNotificationTile(
-      mainTitle: "Account Security",
-      disablesubtitle: true,
-      suffixIcon: true,
-      notificationIcon: Icon(
-        Icons.safety_check_outlined,
-        size: 25.sp,
-        color: AppColor.buttonColor,
+      CustomNotificationTile(
+        mainTitle: "Account Security",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.safety_check_outlined,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {},
       ),
-      subTitle: '',
-      onpressedfn: () {},
-    ),
-  ];
+    ];
+    final List<CustomNotificationTile> litofCustomTiles2 = [
+      CustomNotificationTile(
+        mainTitle: "Invite Friends",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.person_add_rounded,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {},
+      ),
+      CustomNotificationTile(
+        mainTitle: "Privacy Policy ",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.enhanced_encryption_outlined,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PrivacyAndPolicyScreen()));
+        },
+      ),
+      CustomNotificationTile(
+        mainTitle: "Help Center",
+        disablesubtitle: true,
+        suffixIcon: true,
+        notificationIcon: Icon(
+          Icons.emergency_outlined,
+          size: 25.sp,
+          color: AppColor.buttonColor,
+        ),
+        subTitle: '',
+        onpressedfn: () {},
+      ),
+    ];
+
     return BlocProvider(
       create: (context) => HomeCubit()..getUserData(),
       child: Scaffold(
@@ -123,7 +132,6 @@ class ProfileScreen extends StatelessWidget {
             },
             builder: (context, state) {
               final cubit = context.read<HomeCubit>();
-
               if (cubit.userData == null) {
                 return Center(child: CircularProgressIndicator());
               }
@@ -163,6 +171,7 @@ class ProfileScreen extends StatelessWidget {
                               height: 28.h,
                             ),
                             CustomListnotifications(
+                                isScrollable: false,
                                 listText: "Account Settings",
                                 listsize: 360.h,
                                 listofcustomnotification: litofCustomTiles),
@@ -176,6 +185,7 @@ class ProfileScreen extends StatelessWidget {
                               height: 24.h,
                             ),
                             CustomListnotifications(
+                                isScrollable: false,
                                 listText: "General",
                                 listsize: 299.h,
                                 listofcustomnotification: litofCustomTiles2),

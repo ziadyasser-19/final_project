@@ -60,7 +60,8 @@ class CustomAddPaymentMethodContainer extends StatelessWidget {
                 ),
               if (isSelected)
                 SizedBox(
-                  height: 8.h,
+                  //8
+                  height: 5.h,
                 ),
               if (isSelected)
                 Text(

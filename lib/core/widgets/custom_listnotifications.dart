@@ -7,9 +7,15 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomListnotifications extends StatelessWidget {
   final String listText;
   final double listsize;
+  final bool isScrollable;
   final List<CustomNotificationTile> listofcustomnotification;
   const CustomListnotifications(
-      {super.key, required this.listText, required this.listsize, required this.listofcustomnotification});
+      {super.key,
+      required this.listText,
+      required this.listsize,
+      required this.listofcustomnotification,
+      this.isScrollable = true
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +38,11 @@ class CustomListnotifications extends StatelessWidget {
           ),
           SizedBox(
               height: listsize,
+              
               child: ListView.separated(
-                  itemBuilder: (context, index) => listofcustomnotification[index],
+                  physics: isScrollable ? null : NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) =>
+                      listofcustomnotification[index],
                   separatorBuilder: (context, index) => Divider(
                         height: 1.h,
                         color: AppColor.outlinegreyBorderColor,

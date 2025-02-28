@@ -56,7 +56,8 @@ class CustomPaymentMethodContainer extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 8.h,
+                  // 8
+                  height: 5.h,
                 ),
                 Text(
                   cardNumber,

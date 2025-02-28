@@ -13,7 +13,8 @@ class CustomHomeTopContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 552.h,
+      // height: 552.h,
+      height: 565.h,
       width: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(

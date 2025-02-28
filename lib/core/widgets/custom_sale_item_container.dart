@@ -71,7 +71,8 @@ class CustomSaleItemContainer extends StatelessWidget {
             ),
             // Bottom Tag
             Positioned(
-              bottom: -15.h,
+              // 15
+              bottom: -22.h,
               left: 0,
               right: 0,
               child: Align(

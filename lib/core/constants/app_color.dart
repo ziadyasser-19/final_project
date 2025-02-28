@@ -35,4 +35,12 @@ class AppColor {
   static const secondProfilecontainergridcolor = Color(0xffE5F4F8);
   static const thirdProfilecontainergridcolor = Color(0xffEEF8FB);
   static const fourthProfilecontainergridcolor = Color(0xffF1F8FA);
+
+  // add new card scaffols screen 
+  static const firstaddNewCardgridcolor = Color(0xff294255);
+  static const secondaddNewCardgridcolor = Color(0xff293A4D);
+  static const thirdaddNewCardgridcolor = Color(0xff303B4E);
+  static const fourthaddNewCardgridcolor = Color(0xff383D52);
+  static const fifthaddNewCardgridcolor = Color(0xff433C55);
+  static const sixthaddNewCardgridcolor = Color(0xff3E3F55);
 }

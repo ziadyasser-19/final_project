@@ -4,6 +4,7 @@ import 'package:final_project/core/widgets/custom_button.dart';
 import 'package:final_project/core/widgets/custom_payment_method_container.dart';
 import 'package:final_project/core/widgets/custom_payment_modal_sheet.dart';
 import 'package:final_project/feature/payments/logic/cubit/payment_cubit.dart';
+import 'package:final_project/feature/payments/presentation/add_new_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,6 +51,7 @@ class PaymentMethods extends StatelessWidget {
                   )
                 ],
               ),
+            
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0.w),
@@ -78,7 +80,15 @@ class PaymentMethods extends StatelessWidget {
                           context: context,
                           isScrollControlled: true,
                           builder: (tcontext) {
-                            return CustomPaymentModalSheet(onpressedFn: () { },);
+                            return CustomPaymentModalSheet(
+                              onpressedFn: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddNewCardScreen()));
+                              },
+                            );
                           });
                     },
                   ),
