@@ -20,7 +20,10 @@ class SelectAddressScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomAppBarContainerIcon(
-                containerIcon: Icons.arrow_back, ontapFn: () {}),
+                containerIcon: Icons.arrow_back,
+                ontapFn: () {
+                  Navigator.pop(context);
+                }),
             Text(
               'Select Address',
               textAlign: TextAlign.center,

@@ -4,6 +4,7 @@ import 'package:final_project/feature/cart/presentation/cart_screen.dart';
 import 'package:final_project/feature/home/presentation/home_screen.dart';
 import 'package:final_project/feature/main_screen/logic/cubit/main_cubit.dart';
 import 'package:final_project/feature/profile/presentation/profile_screen.dart';
+import 'package:final_project/feature/wishlist/presentation/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -15,7 +16,7 @@ class MainScreen extends StatelessWidget {
   final List<Widget> pages = [
     Center(child: HomeScreen()), 
     Center(child: BrowseScreen()),
-    Center(child: Text("Wishlist Page")),
+    Center(child: WishlistScreen()),
     Center(child: CartScreen()),
     Center(child: ProfileScreen()),
   ];

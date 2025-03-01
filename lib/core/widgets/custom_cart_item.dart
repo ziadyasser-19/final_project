@@ -95,7 +95,7 @@ class CustomCartItem extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      context.read<CartCubit>().addproductquantity(product.id!);
+                      context.read<CartCubit>().addProductQuantity(product.id!);
                     },
                     child: Container(
                       width: 25.w,

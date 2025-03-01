@@ -5,17 +5,18 @@ import 'package:sqflite/sqflite.dart';
 class SQLHelper {
   static Future<Database> initDb() async {
     return sql.openDatabase(
-      'products.db', 
-      version: 1, 
+      'products.db',
+      version: 2,
       onCreate: (Database database, int version) async {
-        await createTable(database);
+        await createCartTable(database);
+        await createWishlistTable(database);
       },
     );
   }
 
-  static Future<void> createTable(Database database) async {
+  static Future<void> createCartTable(Database database) async {
     await database.execute("""
-      CREATE TABLE products(
+      CREATE TABLE cart(
         id TEXT PRIMARY KEY NOT NULL,
         title TEXT NOT NULL,
         description TEXT,
@@ -24,10 +25,25 @@ class SQLHelper {
         price REAL NOT NULL
       )
     """);
-    debugPrint("Table Created");
+    debugPrint("Cart Table Created");
   }
 
-  // Add a product
+  static Future<void> createWishlistTable(Database database) async {
+    await database.execute("""
+      CREATE TABLE wishlist(
+        id TEXT PRIMARY KEY NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        image TEXT,
+        quantity INTEGER NOT NULL,
+        price REAL NOT NULL
+      )
+    """);
+    debugPrint("Wishlist Table Created");
+  }
+
+  // ============================ CART FUNCTIONS ============================
+
   static Future<int> add(String productId, String name, String description, String imageUrl, int quantity, double price) async {
     final db = await SQLHelper.initDb();
     final data = {
@@ -38,24 +54,21 @@ class SQLHelper {
       'quantity': quantity,
       'price': price
     };
-    final id = await db.insert('products', data, conflictAlgorithm: ConflictAlgorithm.replace);
-    debugPrint("Product Added");
+    final id = await db.insert('cart', data, conflictAlgorithm: ConflictAlgorithm.replace);
+    debugPrint("Product Added to Cart");
     return id;
   }
 
-  // Read all products
   static Future<List<Map<String, dynamic>>> get() async {
     final db = await SQLHelper.initDb();
-    return db.query('products', orderBy: "id");
+    return db.query('cart', orderBy: "id");
   }
 
-  // Get product by productId
   static Future<List<Map<String, dynamic>>> getByProductId(String productId) async {
     final db = await SQLHelper.initDb();
-    return db.query('products', where: "id = ?", whereArgs: [productId]);
+    return db.query('cart', where: "id = ?", whereArgs: [productId]);
   }
 
-  // Update product
   static Future<int> update(String productId, String name, String description, String imageUrl, int quantity, double price) async {
     final db = await SQLHelper.initDb();
     final data = {
@@ -65,17 +78,60 @@ class SQLHelper {
       'quantity': quantity,
       'price': price
     };
-    final result = await db.update('products', data, where: "id = ?", whereArgs: [productId]);
+    final result = await db.update('cart', data, where: "id = ?", whereArgs: [productId]);
     return result;
   }
 
-  // Delete product
   static Future<void> delete(String productId) async {
     final db = await SQLHelper.initDb();
     try {
-      await db.delete("products", where: "id = ?", whereArgs: [productId]);
+      await db.delete("cart", where: "id = ?", whereArgs: [productId]);
     } catch (err) {
-      debugPrint("Something went wrong: $err");
+      debugPrint("Error deleting cart product: $err");
+    }
+  }
+
+  // ============================ WISHLIST FUNCTIONS ============================
+
+  static Future<int> addWishlist(String productId, String name, String description, String imageUrl, int quantity, double price) async {
+    final db = await SQLHelper.initDb();
+    final data = {
+      'id': productId,
+      'title': name,
+      'description': description,
+      'image': imageUrl,
+      'quantity': quantity,
+      'price': price
+    };
+    final id = await db.insert('wishlist', data, conflictAlgorithm: ConflictAlgorithm.replace);
+    debugPrint("Product Added to Wishlist");
+    return id;
+  }
+
+  static Future<List<Map<String, dynamic>>> getWishlist() async {
+    final db = await SQLHelper.initDb();
+    return db.query('wishlist', orderBy: "id");
+  }
+
+  static Future<int> updateWishlist(String productId, String name, String description, String imageUrl, int quantity, double price) async {
+    final db = await SQLHelper.initDb();
+    final data = {
+      'title': name,
+      'description': description,
+      'image': imageUrl,
+      'quantity': quantity,
+      'price': price
+    };
+    final result = await db.update('wishlist', data, where: "id = ?", whereArgs: [productId]);
+    return result;
+  }
+
+  static Future<void> deleteWishlist(String productId) async {
+    final db = await SQLHelper.initDb();
+    try {
+      await db.delete("wishlist", where: "id = ?", whereArgs: [productId]);
+    } catch (err) {
+      debugPrint("Error deleting wishlist product: $err");
     }
   }
 }

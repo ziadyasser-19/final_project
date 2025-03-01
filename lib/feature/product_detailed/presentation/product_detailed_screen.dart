@@ -1,12 +1,16 @@
 import 'package:final_project/core/constants/app_color.dart';
 import 'package:final_project/core/db/local_db/local_db_helpers.dart';
+import 'package:final_project/core/widgets/custom_alert_dialog.dart';
 import 'package:final_project/core/widgets/custom_app_bar_container_icon.dart';
+
 import 'package:final_project/core/widgets/custom_button.dart';
 import 'package:final_project/core/widgets/custom_hot_deals_Product_List.dart';
 import 'package:final_project/core/widgets/custom_product_colors.dart';
 import 'package:final_project/core/widgets/custom_product_description.dart';
+
 import 'package:final_project/feature/home/data/model/product_model.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,10 +36,20 @@ class ProductDetailedScreen extends StatelessWidget {
               },
             ),
             CustomAppBarContainerIcon(
-              containerIcon: Icons.favorite_outline,
+              containerIcon: Icons.favorite,
               ontapFn: () async {
                 try {
-                  
+                  await SQLHelper.addWishlist(
+                      product.id!.toString(),
+                      product.title!,
+                      product.description!,
+                      product.image!,
+                      1,
+                      product.price!.toDouble());
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomAlertDialog(dialogmessage: 'Added to favorite successfully ✅', dialogicon: Icon(Icons.favorite, color: Colors.pink, size: 40.sp),),
+                  );
                 } catch (e) {
                   print(e);
                 }
@@ -125,13 +139,15 @@ class ProductDetailedScreen extends StatelessWidget {
                 children: [
                   CustomAppBarContainerIcon(
                       containerIcon: Icons.add_shopping_cart_outlined,
-                      ontapFn: () async {await SQLHelper.add(
-                      product.id!.toString(),
-                      product.title!,
-                      product.description!,
-                      product.image!,
-                      1,
-                      product.price!.toDouble());}),
+                      ontapFn: () async {
+                        await SQLHelper.add(
+                            product.id!.toString(),
+                            product.title!,
+                            product.description!,
+                            product.image!,
+                            1,
+                            product.price!.toDouble());
+                      }),
                   SizedBox(
                     width: 12.w,
                   ),
