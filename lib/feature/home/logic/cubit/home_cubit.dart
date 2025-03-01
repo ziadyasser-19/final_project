@@ -15,6 +15,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<ProductModel> products = [];
   List<ProductModel> browsedProducts = [];
   List<ProductModel> filterproducts = [];
+  List<ProductModel> filterproducts2 = [];
 
   void getUserData() async {
     emit(HomeUserLoading());
@@ -74,8 +75,18 @@ class HomeCubit extends Cubit<HomeState> {
               .split(' ')
               .any((word) => word.toLowerCase().contains(query.toLowerCase())))
           .toList();
-      print("filter prod : " + filterproducts.length.toString());
+      
     }
     emit(HomeProductsLoaded());
   }
+  void filterByPrice(double minPrice, double maxPrice) {
+   filterproducts = filterproducts.where((product) {
+    if (product.price != null) {
+      return product.price! >= minPrice && product.price! <= maxPrice;
+    }
+    return false;
+  }).toList();
+  emit(HomeProductsLoaded());
+}
+
 }

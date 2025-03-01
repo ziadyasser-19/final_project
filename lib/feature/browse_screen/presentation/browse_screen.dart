@@ -32,7 +32,7 @@ class BrowseScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BlocProvider.value(
-                        value: context.read<HomeCubit>(),
+                        value: cubit,
                         child: FilterPageScreen(),
                       ),
                     ),

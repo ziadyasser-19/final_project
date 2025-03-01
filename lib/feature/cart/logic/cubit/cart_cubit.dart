@@ -1,6 +1,5 @@
 import 'package:final_project/core/db/local_db/local_db_helpers.dart';
 import 'package:final_project/feature/cart/data/model/product_card_model.dart';
-import 'package:final_project/feature/home/data/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 

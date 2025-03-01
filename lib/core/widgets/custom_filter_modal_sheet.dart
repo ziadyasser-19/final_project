@@ -1,6 +1,8 @@
 import 'package:final_project/core/constants/app_color.dart';
 import 'package:final_project/core/widgets/custom_button.dart';
+import 'package:final_project/feature/home/logic/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,12 +14,13 @@ class CustomFilterModalSheet extends StatefulWidget {
 }
 
 class _CustomFilterModalSheetState extends State<CustomFilterModalSheet> {
-  RangeValues _currentRange = const RangeValues(160, 1960);
+  RangeValues currentRange = const RangeValues(160, 1960);
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<HomeCubit>();
+
     return Container(
-      
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColor.whiteConstantColor,
@@ -88,18 +91,18 @@ class _CustomFilterModalSheetState extends State<CustomFilterModalSheet> {
               SizedBox(height: 16.h),
 
               RangeSlider(
-                values: _currentRange,
+                values: currentRange,
                 min: 0,
                 max: 2500,
                 divisions: 50,
                 labels: RangeLabels(
-                  "\$${_currentRange.start.round()}",
-                  "\$${_currentRange.end.round()}",
+                  "\$${currentRange.start.round()}",
+                  "\$${currentRange.end.round()}",
                 ),
                 activeColor: Colors.orange,
                 onChanged: (RangeValues values) {
                   setState(() {
-                    _currentRange = values;
+                    currentRange = values;
                   });
                 },
               ),
@@ -107,7 +110,7 @@ class _CustomFilterModalSheetState extends State<CustomFilterModalSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\$${_currentRange.start.round()}",
+                    "\$${currentRange.start.round()}",
                     style: GoogleFonts.plusJakartaSans(
                       color: AppColor.teaxtAppMainColor,
                       fontSize: 16.sp,
@@ -115,7 +118,7 @@ class _CustomFilterModalSheetState extends State<CustomFilterModalSheet> {
                     ),
                   ),
                   Text(
-                    "\$${_currentRange.end.round()}",
+                    "\$${currentRange.end.round()}",
                     style: GoogleFonts.plusJakartaSans(
                       color: AppColor.teaxtAppMainColor,
                       fontSize: 16.sp,
@@ -124,11 +127,22 @@ class _CustomFilterModalSheetState extends State<CustomFilterModalSheet> {
                   ),
                 ],
               ),
-              SizedBox(height: 24.h,),
-              CustomButton(label: "Apply Filter", onPressed: () {
-                
-              },),
-              SizedBox(height: 24.h,)
+              SizedBox(
+                height: 24.h,
+              ),
+              CustomButton(
+                label: "Apply Filter",
+                onPressed: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    
+                  });
+                  cubit.filterByPrice(currentRange.start, currentRange.end);
+                },
+              ),
+              SizedBox(
+                height: 24.h,
+              )
             ],
           ),
         ),

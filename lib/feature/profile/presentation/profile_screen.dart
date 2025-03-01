@@ -1,7 +1,9 @@
 import 'package:final_project/core/constants/app_color.dart';
+import 'package:final_project/core/db/cache/cache_helper.dart';
 import 'package:final_project/core/widgets/custom_listnotifications.dart';
 import 'package:final_project/core/widgets/custom_notification_tiel.dart';
 import 'package:final_project/core/widgets/custom_profile_top_container.dart';
+import 'package:final_project/feature/auth/presentation/login_screen.dart';
 import 'package:final_project/feature/home/logic/cubit/home_cubit.dart';
 import 'package:final_project/feature/notification/presentation/notification_screen.dart';
 import 'package:final_project/feature/payments/presentation/payment_methods.dart';
@@ -198,35 +200,44 @@ class ProfileScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20.0.w, vertical: 24.h),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 48.w,
-                                    height: 55.h,
-                                    decoration: ShapeDecoration(
-                                      color:
-                                          AppColor.notificationContainerColor,
-                                      shape: OvalBorder(),
+                              child: GestureDetector(
+                                onTap: () async {
+                                    await CacheHelper.removeData(key: "token");
+                                    Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()), (
+                                          route) => false,);
+                                  },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 48.w,
+                                      height: 55.h,
+                                      decoration: ShapeDecoration(
+                                        color:
+                                            AppColor.notificationContainerColor,
+                                        shape: OvalBorder(),
+                                      ),
+                                      child: Icon(
+                                        Icons.door_back_door,
+                                        size: 25.sp,
+                                        color: Color(0xFFFF5843),
+                                      ),
                                     ),
-                                    child: Icon(
-                                      Icons.door_back_door,
-                                      size: 25.sp,
-                                      color: Color(0xFFFF5843),
+                                    SizedBox(
+                                      width: 16,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    'Logout',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      color: Color(0xFFFF5843),
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.50.h,
+                                    Text(
+                                      'Logout',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        color: Color(0xFFFF5843),
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.50.h,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],

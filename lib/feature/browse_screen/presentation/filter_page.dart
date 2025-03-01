@@ -10,8 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FilterPageScreen extends StatelessWidget {
-  
-
   const FilterPageScreen({super.key});
 
   @override
@@ -20,14 +18,16 @@ class FilterPageScreen extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        print("filter prod 2 : " + cubit.filterproducts.length.toString());
         return Scaffold(
           floatingActionButton: GestureDetector(
             onTap: () {
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                builder: (tcontext) => CustomFilterModalSheet(),
+                builder: (context) => BlocProvider.value(
+                  value: cubit,
+                  child: CustomFilterModalSheet(),
+                ),
               );
             },
             child: Container(
@@ -76,9 +76,7 @@ class FilterPageScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 8.w),
                   CustomBrowseFormfield(
-                    onpressedFn: () {
-                      
-                    },
+                    onpressedFn: () {},
                     width: 290.w,
                     height: 50.h,
                     hintText: cubit.userQuery,
@@ -91,28 +89,31 @@ class FilterPageScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.0.w),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Result for "${cubit.userQuery}"',
-                      style: GoogleFonts.plusJakartaSans(
-                        color: AppColor.secondarytextColor,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: 1.43.h,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.0.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Result for "${cubit.userQuery}"',
+                        style: GoogleFonts.plusJakartaSans(
+                          color: AppColor.secondarytextColor,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          height: 1.43.h,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "${cubit.filterproducts.length} Found",
-                      style: GoogleFonts.plusJakartaSans(
-                        color: Color(0xFF1B5EC9),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        height: 1.43.h,
-                      ),
-                    )
-                  ],
+                      Text(
+                        "${cubit.filterproducts.length} Found",
+                        style: GoogleFonts.plusJakartaSans(
+                          color: Color(0xFF1B5EC9),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          height: 1.43.h,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: GridView.builder(

@@ -45,6 +45,7 @@ dependencies:
   sqflite: ^2.4.1
   path_provider: ^2.1.2 # Required for database path
   conditional_builder_null_safety: ^0.0.6
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:
