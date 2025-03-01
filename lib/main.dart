@@ -1,12 +1,15 @@
 
+import 'package:final_project/core/db/local_db/local_db_helpers.dart';
 import 'package:final_project/core/network/dio_helper.dart';
 import 'package:final_project/feature/intro/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
+  await SQLHelper.initDb();
   runApp(ScreenUtilInit(
     designSize: const Size(375, 812),
     minTextAdapt: true,

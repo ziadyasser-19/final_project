@@ -7,16 +7,17 @@ class CustomPaymentMethodContainer extends StatelessWidget {
   final String imageAssetsUrl;
   final String cardNumber;
   final String methodName;
+  final bool isShipping;
   const CustomPaymentMethodContainer(
       {super.key,
       required this.imageAssetsUrl,
       required this.cardNumber,
-      required this.methodName});
+      required this.methodName,  this.isShipping = false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 13.0.h),
+      padding: isShipping? EdgeInsets.all(0) : EdgeInsets.symmetric(vertical: 13.0.h),
       child: Container(
         width: 335.w,
         height: 90.h,
@@ -26,7 +27,7 @@ class CustomPaymentMethodContainer extends StatelessWidget {
           shape: RoundedRectangleBorder(
             side:
                 BorderSide(width: 1.h, color: AppColor.outlinegreyBorderColor),
-            borderRadius: BorderRadius.circular(20.r),
+            borderRadius: isShipping?BorderRadius.only(topLeft:Radius.circular(20.r) ,topRight: Radius.circular(20.r) ) : BorderRadius.circular(20.r),
           ),
         ),
         child: Row(
@@ -37,8 +38,7 @@ class CustomPaymentMethodContainer extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(imageAssetsUrl),
-                      fit: BoxFit.contain)),
+                      image: AssetImage(imageAssetsUrl), fit: BoxFit.contain)),
             ),
             SizedBox(
               width: 16.w,
@@ -46,6 +46,8 @@ class CustomPaymentMethodContainer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if(isShipping)
+                SizedBox(height: 12.h,),
                 Text(
                   methodName,
                   style: GoogleFonts.plusJakartaSans(
@@ -55,10 +57,12 @@ class CustomPaymentMethodContainer extends StatelessWidget {
                     height: 1.43.h,
                   ),
                 ),
+                if(!isShipping)
                 SizedBox(
                   // 8
                   height: 5.h,
                 ),
+                if(!isShipping)
                 Text(
                   cardNumber,
                   style: GoogleFonts.plusJakartaSans(

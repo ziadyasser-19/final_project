@@ -1,4 +1,5 @@
 import 'package:final_project/core/constants/app_color.dart';
+import 'package:final_project/core/db/local_db/local_db_helpers.dart';
 import 'package:final_project/core/widgets/custom_app_bar_container_icon.dart';
 import 'package:final_project/core/widgets/custom_button.dart';
 import 'package:final_project/core/widgets/custom_hot_deals_Product_List.dart';
@@ -32,7 +33,13 @@ class ProductDetailedScreen extends StatelessWidget {
             ),
             CustomAppBarContainerIcon(
               containerIcon: Icons.favorite_outline,
-              ontapFn: () {},
+              ontapFn: () async {
+                try {
+                  
+                } catch (e) {
+                  print(e);
+                }
+              },
             )
           ],
         ),
@@ -117,8 +124,14 @@ class ProductDetailedScreen extends StatelessWidget {
               child: Row(
                 children: [
                   CustomAppBarContainerIcon(
-                      containerIcon: Icons.inventory_2_outlined,
-                      ontapFn: () {}),
+                      containerIcon: Icons.add_shopping_cart_outlined,
+                      ontapFn: () async {await SQLHelper.add(
+                      product.id!.toString(),
+                      product.title!,
+                      product.description!,
+                      product.image!,
+                      1,
+                      product.price!.toDouble());}),
                   SizedBox(
                     width: 12.w,
                   ),

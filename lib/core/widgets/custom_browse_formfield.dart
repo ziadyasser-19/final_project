@@ -1,5 +1,5 @@
 import 'package:final_project/core/constants/app_color.dart';
-import 'package:final_project/feature/browse_screen/presentation/filter_page.dart';
+
 import 'package:final_project/feature/home/logic/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
