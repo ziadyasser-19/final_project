@@ -63,7 +63,7 @@ lib/
 
 Clone the repository:
 
-git clone https://github.com/yourusername/flutter-ecommerce-app.git
+git clone 
 
 Navigate to the project directory:
 
@@ -76,10 +76,6 @@ flutter pub get
 Run the app:
 
 flutter run
-
-📸 Screenshots
-
-(Add screenshots of your app here for better visualization!)
 
 📌 Future Improvements
 
